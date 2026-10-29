@@ -1,140 +1,52 @@
-# [08-CameraRecorder](https://github.com/molab-itp/08-CameraRecorder)
+```markdown
+# Pet Trailer Studio
 
-- apply core image filters to live video stream from camera
-- record button to save video to Photo library
-- minminal @Observable Model
-- no need for Combine!
+Pet Trailer Studio is a small video app that turns a pet video into a three-act mini movie trailer.
 
-## Plan
+I started this project from the class demo **08-CameraRecorder**.
 
-- slider for filter param
+The original demo can:
+- show a live camera preview
+- apply Core Image filters
+- record video
+- save the video to the Photo Library
 
-## Sources
+I kept those main functions and changed the interaction into a guided pet trailer.
 
-- mainly claude.ai with alot of debugging
-- preview using FrameView from [08-FilterTheWorld](https://github.com/mobilelabclass-itp/08-FilterTheWorld)
+## How to Use
 
-## CoreImageFilterReference documentation
+1. Open the app and point the camera at your pet.
 
-- [CoreImageFilterReference ref](https://developer.apple.com/library/archive/documentation/GraphicsImaging/Reference/CoreImageFilterReference/index.html)
-  -- list each filter and their parameters
+2. Tap **Start Trailer**.
 
-## Changes
+3. The app starts recording and begins with:
 
-- Detailed research
-  - [CaptureRecorder](https://github.com/jht9629-nyu/CaptureRecorder.git)
-- added app icon
-- in ContentView re-org FilterSelectionView, RecordButtonView
+   **Act 1 — Innocent**  
+   "Everything seemed normal..."
 
+4. Tap **Next Scene** to move to:
+
+   **Act 2 — Chaos**  
+   "Then everything went wrong."
+
+5. Tap **Next Scene** again to move to:
+
+   **Act 3 — The Escape**  
+   "And somehow... they got away."
+
+6. Each scene automatically uses a different visual filter while the same video keeps recording.
+
+7. Tap **Finish Trailer** to stop recording.
+
+8. The finished video is saved to the Photo Library.
+
+## Reference
+
+This project is based on the class demo:
+
+**08-CameraRecorder**
+
+I mainly changed the interaction, story structure, text, and visual design to turn the original filter camera into a small pet movie trailer experience.
+
+I also used AI to help with some visual design and UI styling.
 ```
-func FilterSelectionView() -> some View {}
-func RecordButtonView() -> some View {}
-```
-
-- moved MovieRecorder to z-archived
-
-## Notes
-
-```
-2026-10-20 21:44:54
-in 08-CameraRecorder
-replace ObservableObject with @Observable macro
-
-in 08-CameraRecorder
-is now Observable, does it variables like currentEffect
-need to be marked ignored
-since it was not affecting swiftui
-when ObservableObject was used
-
-   var currentEffect: VideoEffect = .normal
-
-add @ObservationIgnored to match previous behavior
-
->> delete unused CameraPreviewView.swift
->> rename from MovieRecorder to CaptureRecorder
->> created new project and copied source files
-
->> need fix permissions:
-
-This app has crashed because it attempted to access privacy-sensitive data without a usage description. The app's Info.plist must contain an NSCameraUsageDescription key with a string value explaining to the user how the app uses this data.
-
-This app has crashed because it attempted to access privacy-sensitive data without a usage description. The app's Info.plist must contain an NSPhotoLibraryUsageDescription key with a string value explaining to the user how the app uses this data.
-
->> chatgpt.com -- fail
->> claude.a -- fail
->> how to fix xcode project permissions issue: This app has crashed because it attempted to access privacy-sensitive data without a usage description. The app's Info.plist must contain an NSCameraUsageDescription key with a string value explaining to the user how the app uses this data.
->> this is not Info.plist
->> now in project settings
-
->> Add second privacy photo setting
-```
-
-## video-recorder-with-effects-1.swift
-
-- Movie recorded successfully
-- reduced effect to 3
--
-- fail: effects not applied
-- fail: during effect, buttons shoved off screen
-- fail: effect preview affects layout
-
-```
->> https://chatgpt.com/c/67da0189-fe58-8002-8790-e60a12121373
->> fix orientation of context.createCGImage
-
->> Added startRecording_asset from MovieRecordTest
-
->> FrameView
->> from: [08-FilterTheWorld](https://github.com/mobilelabclass-itp/08-FilterTheWorld)
-```
-
-## filtered-video-recorder-app.swift
-
-In AVFoundation AVCaptureSession AVCaptureFileOutputRecordingDelegate correctly apply filters to sample in captureOutput
-privide a swiftui app example of this
-nothing recorded
-
-## video-recorder-with-effects-2.swift
-
-Crash on record
-
-## video-recorder-with-effects-3.swift
-
-Crash - no video preview
-
-## Details
-
-- https://claude.ai/chat/a6a7974f-915e-461a-b566-635b2ff08929
-
-```
-swiftui code to record movie with video effect applied to each frame
-
-code gives the following error: "Initializer for conditional binding must have Optional type, not 'CIImage'" on line "let ciImage = CIImage(cvPixelBuffer: pixelBuffer) else { return }"
-
-This app has crashed because it attempted to access privacy-sensitive data without a usage description. The app's Info.plist must contain an NSCameraUsageDescription key with a string value explaining to the user how the app uses this data.
-
-This app has crashed because it attempted to access privacy-sensitive data without a usage description. The app's Info.plist must contain an NSPhotoLibraryUsageDescription key with a string value explaining to the user how the app uses this data.
-
-This app has crashed because it attempted to access privacy-sensitive data without a usage description. The app's Info.plist must contain an NSMicrophoneUsageDescription key with a string value explaining to the user how the app uses this data.
-
->> Compiles
-
->> Crash on record:
-
-Thread 1: "\*\*\* -[AVCaptureMovieFileOutput startRecordingToOutputFileURL:recordingDelegate:] No active/enabled connections"
-
->> Filters not applied
-
-Initializer for conditional binding must have Optional type, not 'CIImage'
-
-    guard let ciImage = CIImage(cvPixelBuffer: pixelBuffer) else {
-      CVPixelBufferUnlockBaseAddress(pixelBuffer, .readOnly)
-      return
-    }
-
->> New crash
-
-**_ Terminating app due to uncaught exception 'NSGenericException', reason: '_** -[AVCaptureSession startRunning] startRunning may not be called between calls to beginConfiguration and commitConfiguration'
-```
-
-## rename in xcode is hell!
