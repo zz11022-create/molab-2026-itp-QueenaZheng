@@ -1,4 +1,4 @@
-```markdown
+
 # Pet Trailer Studio
 
 Pet Trailer Studio is a small video app that turns a pet video into a three-act mini movie trailer.
@@ -49,4 +49,4 @@ This project is based on the class demo:
 I mainly changed the interaction, story structure, text, and visual design to turn the original filter camera into a small pet movie trailer experience.
 
 I also used AI to help with some visual design and UI styling.
-```
+
