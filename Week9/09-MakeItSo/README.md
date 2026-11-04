@@ -1,4 +1,4 @@
-```markdown
+```
 # Pet Care Tasks
 
 Pet Care Tasks is a small Firebase app for keeping track of simple pet care reminders.
