@@ -1,4 +1,4 @@
-```
+
 # Pet Care Tasks
 
 Pet Care Tasks is a small Firebase app for keeping track of simple pet care reminders.
@@ -60,4 +60,4 @@ This project is based on the class example:
 **09-MakeItSo**
 
 I mainly focused on understanding how the tutorial connects to Firebase and then made small UI and interaction changes without changing the main Firestore logic.
-```
+
